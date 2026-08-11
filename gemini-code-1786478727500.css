@@ -1,0 +1,166 @@
+body { 
+    margin: 0; 
+    overflow: hidden; 
+    background-color: #000;
+    font-family: 'Courier New', Courier, monospace;
+    color: #ddd;
+}
+
+/* UI Elements */
+#fps-counter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #0f0;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 15;
+    text-shadow: 1px 1px 2px #000;
+}
+
+#mod-notification {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    color: #ff3333;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 15;
+    text-shadow: 1px 1px 2px #000;
+    display: none;
+}
+
+.menu-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    padding: 30px 50px;
+    border: 1px solid #333;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0,0,0,1);
+    z-index: 20;
+    user-select: none;
+}
+
+h2 { color: #880000; margin-top: 0; letter-spacing: 2px; }
+p, label { color: #888; }
+
+#instructions-menu { cursor: pointer; }
+#settings-menu { display: none; width: 300px; }
+
+.slider-container {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.slider-container label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+input[type=range] {
+    width: 100%;
+    cursor: pointer;
+    accent-color: #880000;
+}
+
+.btn {
+    background: #222;
+    color: #aaa;
+    border: 1px solid #444;
+    padding: 10px 20px;
+    font-family: 'Courier New', Courier, monospace;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.2s;
+}
+
+.btn:hover { background: #440000; color: #fff; border-color: #880000; }
+
+#crosshair {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 4px; height: 4px;
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    display: none;
+    z-index: 15;
+}
+
+#overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, transparent 35%, rgba(0,0,0,0.95) 100%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Horror Popup Text UI */
+#horror-text {
+    position: absolute;
+    color: #cc0000;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px #ff0000, 3px 3px 0px #000;
+    pointer-events: none;
+    display: none;
+    z-index: 25;
+    user-select: none;
+    text-align: center;
+    animation: glitch 0.15s infinite alternate;
+}
+
+@keyframes glitch {
+    0% { transform: scale(1) skew(0deg); opacity: 0.9; }
+    100% { transform: scale(1.05) skew(3deg); opacity: 1; }
+}
+
+/* Sprint UI */
+#stamina-container {
+    position: absolute;
+    top: 30px; left: 30px;
+    width: 200px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid #333;
+    padding: 6px;
+    z-index: 15;
+    display: none;
+}
+
+#stamina-label { color: #666; font-size: 11px; letter-spacing: 1.5px; margin-bottom: 4px; }
+#stamina-bar-bg { width: 100%; height: 6px; background-color: #111; border: 1px solid #222; }
+#stamina-bar-fill { width: 100%; height: 100%; background-color: #660000; transition: background-color 0.2s ease; }
+
+/* Inventory UI */
+#hotbar {
+    position: absolute;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%);
+    display: none; 
+    gap: 15px;
+    z-index: 15;
+}
+
+.slot {
+    width: 50px; height: 50px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #333;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transition: border-color 0.2s;
+}
+
+.slot .key-label {
+    position: absolute; top: -10px; left: -10px;
+    background: #111; border: 1px solid #444;
+    color: #888; padding: 2px 6px; font-size: 10px; border-radius: 4px;
+}
+
+.slot.active { border-color: #fff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
+.slot.filled::after { content: '†'; font-size: 32px; color: #ffcc00; text-shadow: 0 0 10px #ff9900; }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eerie Stairwell - Modded & Jumpscare</title>
+    <!-- Links to your separate CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="fps-counter">FPS: 0</div>
+    <div id="mod-notification"></div>
+    <div id="overlay"></div>
+    <div id="horror-text"></div>
+    
+    <!-- Main Menu -->
+    <div id="instructions-menu" class="menu-screen">
+        <h2>DESCEND</h2>
+        <p><b>WASD</b> to move<br><b>SHIFT</b> to sprint<br><b>Mouse</b> to look<br><b>1, 2, 3</b> to equip items<br><b>ESC</b> for Settings<br><br><i>Click to start.</i></p>
+    </div>
+
+    <!-- Settings Menu -->
+    <div id="settings-menu" class="menu-screen">
+        <h2>SETTINGS</h2>
+        <div class="slider-container">
+            <label><span>Ambient (Rain)</span> <span id="lbl-ambient">100%</span></label>
+            <input type="range" id="vol-ambient" min="0" max="1" step="0.01" value="0.4">
+        </div>
+        <div class="slider-container">
+            <label><span>SFX (Thunder/Voices)</span> <span id="lbl-sfx">100%</span></label>
+            <input type="range" id="vol-sfx" min="0" max="1" step="0.01" value="1.0">
+        </div>
+        <button id="resume-btn" class="btn">RESUME</button>
+    </div>
+
+    <div id="crosshair"></div>
+
+    <div id="stamina-container">
+        <div id="stamina-label">STAMINA</div>
+        <div id="stamina-bar-bg"><div id="stamina-bar-fill"></div></div>
+    </div>
+
+    <div id="hotbar">
+        <div class="slot active" id="slot-0"><div class="key-label">1</div></div>
+        <div class="slot" id="slot-1"><div class="key-label">2</div></div>
+        <div class="slot" id="slot-2"><div class="key-label">3</div></div>
+    </div>
+
+    <!-- External Three.js Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/PointerLockControls.js"></script>
+    
+    <!-- Links to your separate JavaScript file -->
+    <script src="main.js"></script>
+</body>
+</html>
