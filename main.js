@@ -257,35 +257,12 @@ scene.add(ambientLight);
 const flashlight = new THREE.PointLight(0xdddddd, 1.0, 14);
 camera.add(flashlight);
 
-// --- Create Monster Face Texture matching reference image ---
-function createMonsterFaceTexture() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 512; canvas.height = 512;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#020202'; ctx.fillRect(0, 0, 512, 256);
-    
-    ctx.fillStyle = '#18181f';
-    ctx.beginPath(); ctx.ellipse(256, 220, 120, 160, 0, 0, Math.PI * 2); ctx.fill();
-
-    ctx.fillStyle = '#000000';
-    ctx.beginPath(); ctx.ellipse(210, 190, 28, 40, 0.1, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.ellipse(302, 190, 28, 40, -0.1, 0, Math.PI * 2); ctx.fill();
-
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(206, 188, 6, 6);
-    ctx.fillRect(298, 188, 6, 6);
-
-    ctx.fillStyle = '#0b0b0f';
-    ctx.beginPath(); ctx.moveTo(256, 190); ctx.lineTo(242, 270); ctx.lineTo(270, 270); ctx.closePath(); ctx.fill();
-
-    ctx.fillStyle = '#000000';
-    ctx.beginPath(); ctx.ellipse(256, 330, 40, 10, 0, 0, Math.PI * 2); ctx.fill();
-
-    return new THREE.CanvasTexture(canvas);
-}
+// --- Create Monster Face Texture from user image ---
+const textureLoader = new THREE.TextureLoader();
+const monsterTexture = textureLoader.load('image_8211bd.png');
 
 const monsterGeo = new THREE.PlaneGeometry(3.5, 3.5);
-const monsterMat = new THREE.MeshBasicMaterial({ map: createMonsterFaceTexture(), transparent: true });
+const monsterMat = new THREE.MeshBasicMaterial({ map: monsterTexture, transparent: true });
 const jumpscareMonster = new THREE.Mesh(monsterGeo, monsterMat);
 jumpscareMonster.position.set(0, 0, -1.5);
 jumpscareMonster.visible = false;
@@ -314,6 +291,7 @@ function triggerJumpScare() {
             document.body.style.backgroundColor = '#000';
             camera.position.set(0, 1.6, 0);
             jumpscareMonster.visible = false;
+            window.location.reload(); // Restarts the game completely
         }
     }, 20);
 }
@@ -468,6 +446,15 @@ for (let l = 0; l < TOTAL_LEVELS; l++) {
     levelChunks.push(levelChunk);
 }
 
+// --- Lurking Monster (Bottom of the stairs) ---
+const lurkingGeo = new THREE.PlaneGeometry(25, 25);
+const lurkingMat = new THREE.MeshBasicMaterial({ map: monsterTexture, transparent: true, opacity: 0 });
+const lurkingMonster = new THREE.Mesh(lurkingGeo, lurkingMat);
+const bottomLevelY = START_LEVEL_Y - (99 * FLIGHT_Y_DROP);
+const bottomLevelZ = -(99 * MODULE_DEPTH);
+lurkingMonster.position.set(0, bottomLevelY + 5, bottomLevelZ - 15);
+scene.add(lurkingMonster);
+
 // --- 6. Input & Movement ---
 const keys = { w: false, a: false, s: false, d: false, shift: false };
 let stamina = 100;
@@ -595,6 +582,12 @@ function animate() {
                     }
                 }
             }
+        }
+        
+        // Unveil the Lurking Monster once you reach Level 6 or below
+        if (currentLevel <= 6) {
+            lurkingMonster.material.opacity = Math.min(0.5, lurkingMonster.material.opacity + delta * 0.15);
+            lurkingMonster.position.y = bottomLevelY + 5 + Math.sin(clock.elapsedTime * 1.2) * 0.8;
         }
     }
 
