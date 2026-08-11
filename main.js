@@ -46,7 +46,7 @@ let sfxGain = null;
 let isAudioSetup = false;
 
 // Local Audio Object
-const jumpscareAudio = new Audio('the-rake-scream.mp3');
+const jumpscareAudio = new Audio('creepy-scream.mp3');
 jumpscareAudio.volume = 1.0;
 
 const volAmbientSlider = document.getElementById('vol-ambient');
